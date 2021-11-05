@@ -205,8 +205,35 @@ doctors_warned_meals <- inner_join(pfizer, fda, by = c("first_name" = "name_firs
 
 join <- anti_join(pfizer, fda, by = c())
 
+#############  -------------------------------------------------- #
+# Use the fitdistrplus package to estimate parameters by MLE
+# Simulate Data
+n_samples <- 25; true_rate <- 1; set.seed(1)
+exp_samples <- rexp(n = n_samples,
+                    rate = true_rate)
 
+sample_data <- exp_samples
+hist.sample <- hist(sample_data, breaks = 10)
 
+# Fit model to data
+rate_fit_R <- fitdist(data = sample_data, 
+                      distr = 'exp', 
+                      method = 'mle')
+
+# Get some key information needed
+rate_fit_R$estimate
+##      rate 
+## 0.9705356
+rate_fit_R$loglik
+## [1] -25.74768
+
+# Plot data with fitted function
+plot(hist.sample$mids, hist.sample$density, col = "red")
+lines(hist.sample$mids, rate_fit_R$estimate*exp(-rate_fit_R$estimate*hist.sample$mids), col = "blue")
+
+# Plot from fitdistrplus package
+plot(rate_fit_R)
+#########----------------------------------------------------------------#
 
 
 
