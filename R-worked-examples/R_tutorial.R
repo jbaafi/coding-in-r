@@ -235,5 +235,24 @@ lines(hist.sample$mids, rate_fit_R$estimate*exp(-rate_fit_R$estimate*hist.sample
 plot(rate_fit_R)
 #########----------------------------------------------------------------#
 
+# Fitting data to gamma distribution
+
+# --------------- Number 6 ----------------------
+
+# Fit Gamma distribution  to data
+rates_fit_gamma <- fitdist(data = data, 
+                           distr = 'gamma', 
+                           method = 'mle')
+
+#Plot 
+plot(hist.data$mids, hist.data$density, col = "blue")
+lines(hist.data$mids,(1/(hist.data$mids*sd*sqrt(2*pi)))*exp((-1/(2*sd^2))*(log(hist.data$mids)-mean)^2) , col = "red")
+
+k1 <- rates_fit_gamma$estimate[1]
+theta <- rates_fit_gamma$estimate[2]
+gamma <- (1/(factorial(k1-1)*theta^k1))*(hist.data$mids^(k1-1))*exp(-hist.data$mids/theta)
+
+plot(hist.data$mids, gamma, col = "green")
+lines(hist.data$mids, gamma)
 
 
