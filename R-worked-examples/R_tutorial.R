@@ -227,9 +227,12 @@ rate_fit_R$estimate
 rate_fit_R$loglik
 ## [1] -25.74768
 
+# Exponential prob. density function
+exp_den <- rate_fit_R$estimate*exp(-rate_fit_R$estimate*hist.sample$mids)
+
 # Plot data with fitted function
 plot(hist.sample$mids, hist.sample$density, col = "red")
-lines(hist.sample$mids, rate_fit_R$estimate*exp(-rate_fit_R$estimate*hist.sample$mids), col = "blue")
+lines(hist.sample$mids, exp_den, col = "blue")
 
 # Plot from fitdistrplus package
 plot(rate_fit_R)
@@ -255,4 +258,42 @@ gamma <- (1/(factorial(k1-1)*theta^k1))*(hist.data$mids^(k1-1))*exp(-hist.data$m
 plot(hist.data$mids, gamma, col = "green")
 lines(hist.data$mids, gamma)
 
+##---------------------------------------
 
+set.seed(2019)
+sample = rnorm(100)
+prod(dnorm(sample))
+## [1] 2.23626e-58
+
+sample_large = rnorm(100, sd = 0.1)
+prod(dnorm(sample_large, sd = 0.1))
+
+NLL = function(pars, data) {
+  # Extract parameters from the vector
+  mu = pars[1]
+  sigma = pars[2]
+  # Calculate Negative Log-LIkelihood
+  -sum(dnorm(x = data, mean = mu, sd = sigma, log = TRUE))
+}
+
+mle = optim(par = c(mu = 0.2, sigma = 1.5), fn = NLL, data = sample,
+            control = list(parscale = c(mu = 0.2, sigma = 1.5)))
+mle$par
+
+c(mu = mean(sample), sigma = sd(sample))
+
+#----------------------------------------------
+nLL = function(beta1,beta2){
+  # The tranamission rate break point
+  beta.fun = function(t){
+    if(t<=t.hat1){
+      betaval <- beta1
+    }
+    else if(t>t.hat1 & t<=t.hat2)
+    {betaval <- beta1*exp(-a0*(t-t.hat1))+beta2
+    #betaval<-beta2
+    }
+    else # this part isn't being used right now
+    {betaval <- beta2}
+    return(betaval)
+ }}
