@@ -283,17 +283,11 @@ mle$par
 c(mu = mean(sample), sigma = sd(sample))
 
 #----------------------------------------------
-nLL = function(beta1,beta2){
-  # The tranamission rate break point
-  beta.fun = function(t){
-    if(t<=t.hat1){
-      betaval <- beta1
-    }
-    else if(t>t.hat1 & t<=t.hat2)
-    {betaval <- beta1*exp(-a0*(t-t.hat1))+beta2
-    #betaval<-beta2
-    }
-    else # this part isn't being used right now
-    {betaval <- beta2}
-    return(betaval)
- }}
+data <- sample
+
+nLL = function(rate){
+  exp_den <- rate*exp(-rate*data)
+    return(exp_den)
+  }
+
+exp_den <- fit_exp$estimate*exp(-fit_exp$estimate*hist.data$mids)
