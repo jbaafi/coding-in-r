@@ -291,3 +291,7 @@ nLL = function(rate){
   }
 
 exp_den <- fit_exp$estimate*exp(-fit_exp$estimate*hist.data$mids)
+
+
+# ---------------------------------
+
