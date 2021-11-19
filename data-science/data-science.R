@@ -22,9 +22,8 @@ df <- data.frame(dimension=rep(c('1mm', '2mm'), 3),
 # Plot 
 ggplot(data=df, aes(x=trees, y=record, group=dimension, color=dimension))+ 
   geom_line()+
+  theme_light()+
   xlab("Tree species")+
   ylab("Decomposition Rate")+
-  ylim(0, 8)+ 
-  theme_light()
-
+  ylim(0, 8)
 
