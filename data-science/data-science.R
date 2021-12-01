@@ -27,3 +27,9 @@ ggplot(data=df, aes(x=trees, y=record, group=dimension, color=dimension))+
   ylab("Decomposition Rate")+
   ylim(0, 8)
 
+# Existing data in R to be used for experimentation
+data <- data()
+
+
+
+
