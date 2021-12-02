@@ -1,4 +1,4 @@
-# Title: GILLESPIE SSA WITH TIME-DEPENDENT PARAMETERS 
+# Title: GILLESPIE SSA WITH TIME-DEPENDENT PARAMETERS
 # Date: 01/12/2021
 
 # Clear workspace
@@ -29,7 +29,8 @@ v <- matrix( c(+1, -1), ncol = 2)
 # The propensity scores must also be a matrix-valued function depdendent on 3 parameters: 
 # time (t), the state of the system (X) and additional parameters (params) which we 
 # discuss later.
-pfun <- function(t,X,params){ cbind(2 * X[, 1], (1 + 1*X[, 1]/1000)*X[, 1]) }
+pfun <- function(t,X,params){ cbind(2 * X[, 1],
+                                    (1 + 1*X[, 1]/1000)*X[, 1]) }
 
 #The model runs automatically from 0 to 1 conducting 10 simulations and generating a plot.
 simulation <- ssa(X, pfun, v)
@@ -63,7 +64,7 @@ pfun <- function(t,X,params){ cbind(2 * X[, 1],
 
 #Simulation is done in exactly the same manner as previously done. No change needed!
 simulation <- ssa(X, pfun, v, tmin = 2, tmax = 10, nsim = 20, 
-                    title = "Time-dependent Logistic Growth: Example2", 
+                    title = "Time-dependent Logistic Growth", 
                     xlab = "Time", ylab = "Individuals")
 
 # -------------------------------------------
@@ -84,7 +85,7 @@ pfun <- function(t, X, params){ cbind(params[1]*t*X[,1] + 1,
 v <- matrix(c(+1,-1,0,0,+1,-1),nrow=2,byrow=TRUE)
 
 #Simulate
-simulation <- ssa(X, pfun, v, params, 
+simulation <- ssa(X, pfun, v, params,
                   title = "Example 4: Time-dependent Lotka-Volterra",
                   xlab = "Time", ylab = "Number of individuals")
 
