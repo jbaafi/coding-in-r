@@ -34,12 +34,12 @@ pfun <- function(t,X,params){ cbind(2 * X[, 1],
                                     (1 + 1*X[, 1]/1000)*X[, 1]) }
 
 #The model runs automatically from 0 to 1 conducting 10 simulations and generating a plot.
-simulation <- ssa(X, pfun, v)
+simulation <- ssa(X, pfun, v,  nsim = 1)
 
 # The time for the simulation and number of simulations can be specified:
 tmin       <- 0
 tmax       <- 10
-nsim       <- 20
+nsim       <- 1
 
 # Plot characteristics can be specified by title, xlab and ylab:
 simulation <- ssa(X, pfun, v, tmin, tmax, nsim, 
@@ -73,7 +73,6 @@ simulation <- ssa(X, pfun, v, tmin = 2, tmax = 10, nsim = 20,
 
 #Set seed
 set.seed(3289650)
-
 #Get initial parameters
 params <- c(a = 3, b = 0.01, c = 2)
 X <- matrix(c(100, 100), ncol = 2)
@@ -143,9 +142,9 @@ simulation <- ssa(X, pfun, v, params,
                   title = "Example 5: Lotka-Volterra with time-dependent random variables",
                   xlab = "Time", ylab = "Number of individuals")
 
-# ----------------------------------------------------------------------
+# ---------------------------------------------
 #EXAMPLE 6
-#-----------------------
+#---------------------------------------------
 #Time dependent SIS model
 set.seed(123)
 
@@ -189,38 +188,8 @@ return(matreturn)
 v <- matrix(c(1,-1, -1, 0, 0, 1, 0, 0, 1, -1, -1, -1), nrow = 2, byrow = TRUE)
 tmin <- 0
 tmax <- 0.5
-nsim <- 10
+nsim <- 1
 
 #Simulate the values
 simulation <- ssa(X, pfun, v, params, tmin, tmax, nsim = nsim, print.time = FALSE, 
-                  plot.sim = FALSE, kthsave = 1)
-
-#Plot using ggplot2 library
-ggplot(data = simulation, aes(x = Time, y = Var2, group=as.factor(Simulation))) +
-  geom_line(aes(color = as.factor(Simulation))) + theme_bw() + 
-  theme(legend.position="none") +
-  ggtitle(paste0("SIS example; Infected cases ", nsim, " simulations")) + 
-  xlab("Time") + ylab("Individuals") +
-  geom_vline(xintercept = tmax, linetype = 2)
-
-# try this
-set.seed(123)
-simulation1 <- ssa(X, pfun, v, params, tmin, tmax, nsim = 10, print.time = FALSE, 
-                   plot.sim = FALSE, maxiter = 5000, keep.file = TRUE,
-                   fname = "sim1.txt")
-
-set.seed(123)
-simulation2 <- ssa(X, pfun, v, params, tmin, tmax, nsim = 10, print.time = FALSE, 
-                   plot.sim = FALSE, maxiter = 5000, kthsave = 10, keep.file = TRUE,
-                   fname = "sim2.txt")
-
-#There are almost no noticable differences between the models:
-  
-ggplot(simulation1, aes(x = Time, y = Var2, group=as.factor(Simulation))) +
-  geom_point(data = simulation2, 
-             aes(color = "Every 10 values")) + 
-  geom_step(data = simulation1, 
-            aes(color = "All values"), size = 0.5) + 
-  theme(legend.position="none") + theme_bw() +
-  ggtitle(paste0("SIS example; Infected cases ", 10, " simulations")) + 
-  xlab("Time") + ylab("Individuals") 
+                  plot.sim = TRUE, kthsave = 1)
