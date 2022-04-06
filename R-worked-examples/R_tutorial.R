@@ -295,3 +295,5 @@ exp_den <- fit_exp$estimate*exp(-fit_exp$estimate*hist.data$mids)
 
 # ---------------------------------
 
+# This site is a great site for fitting data to a mathematical model/equation/function
+# https://martinlab.chem.umass.edu/r-fitting-data/
