@@ -6,7 +6,7 @@
 rm(list = ls())
 
 # Working directory
-setwd("/Users/jbaafi/Google Drive/My Drive")
+#setwd("/Users/jbaafi/Google Drive/My Drive") # intial directory
 
 # Install packages eg. gapminder
 #install.packages("gapminder")
