@@ -59,3 +59,51 @@ ode(
 plot(out$time, out$J, type = "l", col = "red")
 lines(out$time, out$A, type = "l", col = "blue", lwd = 1)
 
+
+# -------------------------------------------------------------
+closed.sir.model <- function (t, x, params) {
+  ## first extract the state variables
+  E <- x[1]
+  A <- x[2]
+  ## now extract the parameters
+  beta <- params["beta"]
+  gamma <- params["gamma"]
+  ## now code the model equations
+  dEdt <- beta*A-gamma*E
+  dAdt <- gamma*E
+  ## combine results into a single vector
+  dxdt <- c(dEdt,dAdt)
+  ## return result as a list!
+  list(dxdt)
+}
+
+params <- c(beta=10,gamma=0.5) # per year
+#params <- c(beta=1.096,gamma=0.0769)
+
+#times <- seq(from=0,to=60/365,by=1/365/4) # per year
+times <- seq(from=0,to=1,by=0.01) # returns a sequence
+xstart <- c(E=0.00,A=100) 
+
+out <- as.data.frame(
+  ode(
+    func=closed.sir.model,
+    y=xstart,
+    times=times,
+    parms=params
+  )
+)
+
+plot(E ~ time,data=out,type='l')
+lines(A~time, data=out, col = "blue")
+
+
+#define plot area as three rows and one column
+par(mfrow = c(2, 1), mar = c(3, 2, 1, 3))    
+
+#create plots
+plot(E~time, data = out, pch=19, col='red', type = "l")
+plot(A~time, data = out, pch=19, col='blue', type = "l")
+
+
+
+
