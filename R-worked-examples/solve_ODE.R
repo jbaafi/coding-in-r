@@ -77,11 +77,11 @@ closed.sir.model <- function (t, x, params) {
   list(dxdt)
 }
 
-params <- c(beta=10,gamma=0.5) # per year
+params <- c(beta=1,gamma=0.05) # per year
 #params <- c(beta=1.096,gamma=0.0769)
 
 #times <- seq(from=0,to=60/365,by=1/365/4) # per year
-times <- seq(from=0,to=1,by=0.01) # returns a sequence
+times <- seq(from=0,to=50,by=0.01) # returns a sequence
 xstart <- c(E=0.00,A=100) 
 
 out <- as.data.frame(
