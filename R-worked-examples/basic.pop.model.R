@@ -42,13 +42,13 @@ mu_A = 0.05
 parameters <- c(b, k, F_E, mu_E, F_L, mu_L, delta_L, F_P, mu_P, sigma, mu_A)
 
 # Vector reproduction numbers
-R0 <- b*sigma*F_E*F_L*F_P/(mu_E+F_E)*(mu_L+F_L)*(mu_P+F_P)
+R0 <- b*sigma*F_E*F_L*F_P/((mu_E+F_E)*(mu_L+F_L)*(mu_P+F_P)*mu_A)
 
 #Initial conditions
 y0 <- c(100, 0, 0, 100)
 
 #time steps
-times <- seq(0, 100, by = 0.01)
+times <- seq(0, 50)
 
 # Numerical integration. 
 out <-  ode(y = y0, func = pop.model, times = times, parms = parameters)
@@ -56,4 +56,6 @@ out <- data.frame(out)
 
 plot(out$time, out$X1, type = "l", xlab = "Time (days)", ylab = "Stage size")
 lines(out$X2, col = "red")
+lines(out$X3, col = "blue")
+lines(out$X4, col = "green")
 
