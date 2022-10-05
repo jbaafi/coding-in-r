@@ -3,7 +3,7 @@
 # Set working directory
 setwd("/Users/jbaafi/Documents/coding-in-r")
 
-# Sample plot
+# Sample plot without axes labels
 plot(1:10, ann = FALSE)
 
 mtext(side = 1, text = "X Axis", line = 3)
@@ -40,7 +40,10 @@ hist(x, xlim=range(x),
 
 hist(x, xlim=range(x),
 xlab= "Variable Lable", ylab="density", main="Title of plot", prob=TRUE, 
-cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5)
+cex.lab=1.5, 
+cex.axis=1.5, 
+cex.main=1.5, 
+cex.sub=1.5)
 
 
 
