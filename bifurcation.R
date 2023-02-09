@@ -138,3 +138,52 @@ plot(0, 0, pch = "", xlab = param.name, ylab = plot.variable,
 for (i in 1:length(param.seq)) {
   points(rep(param.seq[i], n), out[[i]][,plot.variable])
 }
+
+
+
+# Example of using the package for producing bifurcation diagrams
+library(deBif)
+
+if(interactive()){
+  # The initial state of the system has to be specified as a named vector of state values.
+  state <- c(R=1, N=0.01)
+  # Parameters has to be specified as a named vector of parameters.
+  parms <- c(r=1, K=1, a=1, c=1, delta=0.5)
+  # The model has to be specified as a function that returns
+  # the derivatives as a list.
+  model <- function(t, state, parms) {
+    with(as.list(c(state,parms)), {
+      dR <- r*R*(1 - R/K) - a*R*N
+      dN <- c*a*R*N - delta*N
+      # The order of the derivatives in the returned list has to be
+      # identical to the order of the state variables contained in
+      # the argument "state"
+      return(list(c(dR, dN)))
+    })
+  }
+  bifurcation(model, state, parms)
+}
+
+if(interactive()){
+  # The initial state of the system has to be specified as a named vector of state values.
+  state <- c(R=1, N=0.01)
+  # Parameters has to be specified as a named vector of parameters.
+  parms <- c(r=1, K=1, a=1, c=1, delta=0.5)
+  # The model has to be specified as a function that returns
+  # the derivatives as a list.
+  model <- function(t, state, parms) {
+    with(as.list(c(state,parms)), {
+      dR <- r*R*(1 - R/K) - a*R*N
+      dN <- c*a*R*N - delta*N
+      # The order of the derivatives in the returned list has to be
+      # identical to the order of the state variables contained in
+      # the argument "state"
+      return(list(c(dR, dN)))
+    })
+  }
+  phaseplane(model, state, parms)
+}
+
+
+
+
