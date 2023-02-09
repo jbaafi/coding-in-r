@@ -161,8 +161,9 @@ if(interactive()){
       return(list(c(dR, dN)))
     })
   }
-  bifurcation(model, state, parms)
+  phaseplane(model, state, parms, saveplotas="pdf")
 }
+
 
 if(interactive()){
   # The initial state of the system has to be specified as a named vector of state values.
@@ -181,9 +182,7 @@ if(interactive()){
       return(list(c(dR, dN)))
     })
   }
-  phaseplane(model, state, parms)
+  bifurcation(model, state, parms)
 }
-
-
 
 
