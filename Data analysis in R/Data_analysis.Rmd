@@ -1,0 +1,122 @@
+---
+title: "Data Analysis in R"
+author: "jbaafi"
+date: "2023-03-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Analysis Lesson in R 
+
+```{r cars}
+#download.file(url = "https://ndownloader.figshare.com/files/2292169", destfile = "/Users/jbaafi/Documents/Github/coding-in-r/Data analysis in R/data_raw/portal_data_joined.csv")
+```
+```{r}
+library(tidyverse)
+surveys <- read_csv("data_raw/portal_data_joined.csv")
+head(surveys)
+```
+
+
+```{r}
+str(surveys)
+```
+```{r}
+library(lubridate)
+```
+
+Now we want to create date vector. This link gives tutorial on working with dates [here](https://epirhandbook.com/en/working-with-dates.html)
+```{r}
+my_date <- ymd("2023-03-19")
+str(my_date)
+```
+
+```{r}
+paste(surveys$year, surveys$month, surveys$day, sep = "-")
+
+ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+
+surveys$date <- ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+```
+
+
+```{r}
+head(surveys)
+```
+
+```{r}
+summary(surveys)
+```
+
+```{r}
+date()
+now()
+today()
+```
+
+
+
+```{r}
+# Put the average temperature in this data frame format
+df <- read.table(text = 
+                   "Date           Temp
+2020-01-01      6.5       
+2020-02-01      7.5          
+2020-03-01      10.5
+2020-04-01      15       
+2020-05-01      20       
+2020-06-01      25.5
+2020-07-01      29.5   
+2020-08-01      28.5      
+2020-09-01      23.5
+2020-10-01      17.5      
+2020-11-01      11.0          
+2020-12-01      7.5",
+                 header = TRUE, stringsAsFactors = FALSE)
+
+
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(tidyr)
+
+# df <- df %>% mutate(Date = ymd(Date)) %>%
+#   group_by(Date) %>%
+#   expand(Date = seq(floor_date(Date, unit = "month"),
+#                     ceiling_date(Date, unit="month")-days(1), by="day"), Temp)  %>%
+#   as.data.frame()
+
+Dates <- seq(from = min(as.Date(df$Date)),
+             to = ceiling_date(max(as.Date(df$Date)), "month") - days(1),
+             by = "1 days")
+
+df <- data.frame(Date = Dates,
+           Temp = setNames(df$Temp, df$Date)[format(Dates, format = "%Y-%m-01")])
+```
+
+
+```{r}
+library(lubridate)
+
+d <- read.table(text = "Date           Value 
+                2008-01-01      3.5          
+                2008-02-01      9.5          
+                2008-03-01      0.1",
+                stringsAsFactors = FALSE, header = TRUE)
+
+Dates <- seq(from = min(as.Date(df$Date)),
+             to = ceiling_date(max(as.Date(df$Date)), "month") - days(1),
+             by = "1 days")
+
+data.frame(Date = Dates,
+           Temp = setNames(df$Temp, df$Date)[format(Dates, format = "%Y-%m-01")])
+```
+
+
+
+
+
+
